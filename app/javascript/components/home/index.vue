@@ -1,6 +1,7 @@
 <template>
-  <div>
-    {{ message }}
+  <div id="home">
+    <div class="container">
+    </div>
   </div>
 </template>
 
@@ -8,7 +9,6 @@
   export default {
     data() {
       return {
-        message: 'hello index'
       }
     }
   }     
