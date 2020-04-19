@@ -10,8 +10,6 @@ module Api
         success_response(data: @projects, model: 'Project')
       end
 
-      def show; end
-
       private
 
       def load_projects
