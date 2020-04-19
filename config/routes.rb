@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :sessions, only: :create
-      resources :projects, only: %i[index show]
+      resources :projects, only: :index, param: :title do
+        resources :lists, only: :index
+      end
     end
   end
 
