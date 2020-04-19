@@ -9,4 +9,5 @@ class Project < ApplicationRecord
   belongs_to :user
 
   validates :title, :status, :user_id, presence: true
+  validates :title, uniqueness: { scope: :user_id }
 end
