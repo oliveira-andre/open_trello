@@ -52,6 +52,12 @@
         password: ''
       }
     },
+    beforeCreate: function() {
+      let token = localStorage.getItem('token');
+      if(token != null) {
+        this.$router.push('/');
+      }
+    },
     methods: {
       onSubmit: function () {
         this.$http.post('/api/v1/sessions', {
