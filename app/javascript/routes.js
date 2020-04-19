@@ -5,11 +5,13 @@ Vue.use(VueRouter);
 
 import LoginIndex from './components/login/index';
 import HomeIndex from './components/home/index';
+import ProjectIndex from './components/project/index';
 
 export default new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: HomeIndex },
     { path: '/login', component: LoginIndex },
+    { path: '/', component: HomeIndex },
+    { path: '/projects/:title', component: ProjectIndex },
   ],
 });
