@@ -1,6 +1,15 @@
 @import "bulma/bulma";
 @import "toastr/toastr";
+@import "controllers/*";
 
 .card {
   width: 100%;
+}
+
+.navbar-brand {
+  button {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
 }
