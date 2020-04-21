@@ -8,7 +8,8 @@ class Task < ApplicationRecord
   has_one_attached :cover
 
   belongs_to :list
-  belongs_to :responsable_id, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :responsable_id, class_name: 'User', foreign_key: 'user_id',
+                              optional: true
 
   validates :title, :status, :list_id, presence: true
 end

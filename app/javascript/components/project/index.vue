@@ -62,6 +62,7 @@ import {
   Bold,
   Italic,
 } from 'tiptap-extensions';
+import toastr from 'toastr/toastr';
 
   export default {
     data: function() {
@@ -106,6 +107,7 @@ import {
                 description: event.getHTML(),
               }
             }).then(response => {
+              toastr.success('Saved!');
             }, response => { toastr.error('May accour a problem') });
           }, 2000)
         },
@@ -133,7 +135,7 @@ import {
             }
           }).then(response => {
             if(response.status == 200) {
-              Turbolinks.visit(`/projects/${this.$route.params.title}`);
+              toastr.success('Moved with success');
             }
           });
       },
