@@ -29,6 +29,12 @@
         token: localStorage.getItem('token'),
       }
     },
+    beforeCreate: function() {
+      let token = localStorage.getItem('token');
+      if(token == null) {
+        this.$router.push('/login');
+      }
+    },
     created: function() {
       this.$http.get('/api/v1/projects', {
         headers: { token: this.token }
