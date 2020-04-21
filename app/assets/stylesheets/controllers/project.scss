@@ -3,4 +3,14 @@
   padding-bottom: 790px;
   overflow-x: scroll;
   overflow-y: hidden;
+
+  .draggable-column {
+    width: 100%;
+    display: inherit;
+  }
+
+  .draggable-card {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
 }
