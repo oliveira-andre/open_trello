@@ -7,6 +7,8 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
     "bulma": "^0.8.2",
+    "tiptap": "^1.27.0",
+    "tiptap-extensions": "^1.29.0",
     "toastr": "^2.1.4",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
@@ -14,7 +16,8 @@
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.6",
     "vue-template-compiler": "^2.6.11",
-    "vue-turbolinks": "^2.1.0"
+    "vue-turbolinks": "^2.1.0",
+    "vuedraggable": "^2.23.2"
   },
   "version": "0.1.0",
   "devDependencies": {
