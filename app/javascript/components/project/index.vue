@@ -1,31 +1,142 @@
 <template>
   <div id="project">
     <div class="columns">
+      <draggable v-model="lists" ghost-class="ghost" draggable=".column" class="draggable-column">
       <div class="column is-3" v-for="list in lists">
-        <div class="card">
+        <div class="card has-background-grey-lighter">
+          <div class="card-header">
+            <p class="card-header-title">{{ list.title }}</p>
+          </div>
           <div class="card-content">
-            <p class="title is-size-5">{{ list.title }}</p>
+            <draggable v-model="list.tasks" ghost-class="ghost" draggable=".draggable-card">
+            <div class="card draggable-card" v-for="task in list.tasks" v-on:click="showDescription">
+              <div class="is-hidden" ></div>
+              <div class="card-header">
+                <p class="card-header-title" :data-id="task.id" :data-description="task.description" :data-title="task.title" :data-list-id="list.id" :data-list-title="list.title">
+                {{ task.title }}
+                </p>
+              </div>
+            </div>
+            </draggable>
           </div>
         </div>
       </div>
+      </draggable>
     </div>
+  <div class="modal" id="description-modal">
+    <div class="modal-background" v-on:click="closeModal"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <div class="columns">
+          <div class="column is-8">
+            <editor-menu-bar :editor="descriptionEditor" v-slot="{ commands, isActive }">
+              <div>
+                <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">
+                  Bold
+                </button>
+                <button :class="{ 'is-active': isActive.italic() }" @click="commands.italic">
+                  Italic
+                </button>
+              </div>
+            </editor-menu-bar>
+            <editor-content :editor="descriptionEditor" />
+          </div>
+          <div class="column is-4">
+            <div class="select">
+              <select v-model="currentListId" v-on:change="updateList">
+                <option :value="list.id" v-for="list in lists" :checked="currentListId == list.id"> {{ list.title }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import {
+  Bold,
+  Italic,
+} from 'tiptap-extensions';
+
   export default {
     data: function() {
       return {
         token: localStorage.getItem('token'),
         lists: [],
+        currentDescription: '',
+        currentTitle: '',
+        currentListId: '',
+        currentTaskId: '',
+        descriptionEditor: null,
+      }
+    },
+    components: {
+      draggable,
+      EditorMenuBar,
+      EditorContent,
+    },
+    beforeCreate: function() {
+      let token = localStorage.getItem('token');
+      if(token == null) {
+        this.$router.push('/login');
       }
     },
     created: function() {
-      this.$http.get(`/api/v1/projects/${this.$route.params.title}/lists`, { 
+      const vm = this;
+      vm.$http.get(`/api/v1/projects/${this.$route.params.title}/lists`, { 
         headers: { token: this.token }
       }).then(response => {
         this.lists = response.body;
       }, response => { toastr.error('May accour a problem') });
-    }
+      this.descriptionEditor = new Editor({extensions: [
+        new Bold(),
+        new Italic(),
+      ],
+        onUpdate: function(event) {
+          setTimeout(function(){
+          vm.$http.put(
+            `/api/v1/projects/${vm.currentTitle}/lists/${vm.currentListId}/tasks/${vm.currentTaskId}`, {
+              headers: { token: this.token },
+              tasks: {
+                description: event.getHTML(),
+              }
+            }).then(response => {
+            }, response => { toastr.error('May accour a problem') });
+          }, 2000)
+        },
+      });
+    },
+    methods: {
+      showDescription: function() {
+        this.descriptionEditor.setContent(event.target.dataset.description);
+        this.currentTaskId = event.target.dataset.id;
+        this.currentDescription = event.target.dataset.description;
+        this.currentTitle = event.target.dataset.title;
+        this.currentListId = event.target.dataset.listId;
+        let modal = document.getElementById('description-modal');
+        modal.classList.add('is-active');
+      },
+      closeModal: function() { 
+        Turbolinks.visit(`/projects/${this.$route.params.title}`);
+      },
+      updateList: function() { 
+        this.$http.put(
+          `/api/v1/projects/${this.currentTitle}/lists/${this.currentListId}/tasks/${this.currentTaskId}`, {
+            headers: { token: this.token },
+            tasks: {
+              list_id: this.currentListId,
+            }
+          }).then(response => {
+            if(response.status == 200) {
+              Turbolinks.visit(`/projects/${this.$route.params.title}`);
+            }
+          });
+      },
+    },
   }
-</script>
+  </script>
