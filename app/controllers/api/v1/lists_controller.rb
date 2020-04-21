@@ -1,7 +1,7 @@
 module Api
   module V1
     class ListsController < ApplicationController
-      before_action :load_user, only: :index
+      before_action :load_user
       before_action :load_project, :load_lists, only: :index
 
       def index
