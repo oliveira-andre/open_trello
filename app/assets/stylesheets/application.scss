@@ -2,6 +2,29 @@
 @import "toastr/toastr";
 @import "controllers/*";
 
+html, body {
+  height: 100%;
+}
+
+.black-background {
+  color: white;
+  font-feature-settings: "liga" 0;
+  line-height: 1.7;
+  background: #1f1f1f;
+  padding: 0px;
+  background-repeat: repeat-y;
+  height: auto;
+  min-height: 100%;
+}
+
+p {
+  color: white !important;
+}
+
+a {
+  color: white !important;
+}
+
 .card {
   width: 100%;
 }
@@ -12,5 +35,9 @@
     right: 15px;
     top: 10px;
   }
+}
+
+.has-background-blue-sea {
+  background: #1fbac0 !important;
 }
 
