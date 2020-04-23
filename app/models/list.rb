@@ -7,5 +7,5 @@ class List < ApplicationRecord
 
   belongs_to :project
 
-  validates :title, :status, :project_id, presence: true
+  validates :status, :project_id, presence: true
 end

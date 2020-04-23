@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_005717) do
+ActiveRecord::Schema.define(version: 2020_04_23_023702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_005717) do
   end
 
   create_table "lists", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title", default: "", null: false
     t.integer "status", default: 0
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_005717) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title", default: "", null: false
     t.integer "status", default: 0, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_005717) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title", default: "", null: false
     t.text "description"
     t.integer "status", default: 0, null: false
     t.datetime "schedule_date"

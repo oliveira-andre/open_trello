@@ -11,5 +11,5 @@ class Task < ApplicationRecord
   belongs_to :responsable_id, class_name: 'User', foreign_key: 'user_id',
                               optional: true
 
-  validates :title, :status, :list_id, presence: true
+  validates :status, :list_id, presence: true
 end
