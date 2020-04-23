@@ -5,12 +5,18 @@
   overflow-y: hidden;
 
   .draggable-column {
-    width: 100%;
-    display: inherit;
+    display: contents;
   }
 
   .draggable-card {
     margin-bottom: 10px;
     cursor: pointer;
+  }
+
+  input {
+    background: transparent !important;
+    color: white !important;
+    text-decoration: none;
+    border: none;
   }
 }
