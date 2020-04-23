@@ -113,11 +113,12 @@ import toastr from 'toastr/toastr';
         onUpdate: function(event) {
           setTimeout(function(){
           vm.$http.put(
-            `/api/v1/projects/${vm.currentTitle}/lists/${vm.currentListId}/tasks/${vm.currentTaskId}`, {}, {
-              headers: { token: vm.token },
+            `/api/v1/projects/${vm.currentTitle}/lists/${vm.currentListId}/tasks/${vm.currentTaskId}`, { 
               tasks: {
                 description: event.getHTML(),
               }
+            }, {
+              headers: { token: vm.token },
             }).then(response => {
               if(response.status == 202) {
                 toastr.success('Saved!');
@@ -142,11 +143,12 @@ import toastr from 'toastr/toastr';
       },
       updateList: function() { 
         this.$http.put(
-          `/api/v1/projects/${this.currentTitle}/lists/${this.currentListId}/tasks/${this.currentTaskId}`, {}, {
-            headers: { token: this.token },
+          `/api/v1/projects/${this.currentTitle}/lists/${this.currentListId}/tasks/${this.currentTaskId}`, { 
             tasks: {
               list_id: this.currentListId,
             }
+          }, {
+            headers: { token: this.token },
           }).then(response => {
             if(response.status == 202) {
               toastr.success('Moved with success');
@@ -157,11 +159,12 @@ import toastr from 'toastr/toastr';
         const vm = this;
         setTimeout(function(){
           vm.$http.put(
-            `/api/v1/projects/${vm.currentTitle}/lists/${vm.currentListId}/tasks/${vm.currentTaskId}`, {}, {
-              headers: { token: this.token },
+            `/api/v1/projects/${vm.currentTitle}/lists/${vm.currentListId}/tasks/${vm.currentTaskId}`, { 
               tasks: {
                 title: vm.currentTitle
               }
+            }, {
+              headers: { token: this.token },
             }).then(response => {
               if(response.status == 202) {
                 toastr.success('Saved!');
