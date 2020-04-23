@@ -4,7 +4,7 @@
       <section class="section">
         <div class="columns is-multiline">
           <div class="column is-2" v-for="(project, index) in projects" :key="index">
-            <div class="box">
+            <div class="box has-background-blue-sea">
               <div class="media-content">
                 <router-link class="title is-size-5" :to="`/projects/${project.title}`">
                   {{ project.title }}
