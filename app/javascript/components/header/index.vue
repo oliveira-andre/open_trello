@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav class="navbar black-background" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item title is-size-5 has-text-centered" href="/">
         Open Trello
