@@ -10,7 +10,7 @@
             <div class="card">
               <form v-on:submit.prevent.stop="onSubmit">
                 <div class="column is-12">
-                  <p class="subtitle has-text-weight-bold has-text-centered">
+                  <p class="subtitle has-text-weight-bold has-text-centered has-text-grey-dark">
                     Fazer login no Open Trello
                   </p>
                 </div>
