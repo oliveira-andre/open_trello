@@ -5,7 +5,9 @@
       <div class="column is-3" v-for="list in lists">
         <div class="card has-background-grey-darker">
           <div class="card-header">
-            <p class="card-header-title">{{ list.title }}</p>
+            <p class="">
+             <input type="text" :value="list.title" class="card-header-title is-size-5" :data-list-id="list.id" v-on:keyup="saveListTitle">
+            </p>
           </div>
           <div class="card-content">
             <draggable v-model="list.tasks" ghost-class="ghost" draggable=".draggable-card">
@@ -34,7 +36,7 @@
     <div class="modal-background" v-on:click="closeModal"></div>
     <div class="modal-card">
       <section class="modal-card-header has-background-grey-darker">
-        <input type="text" class="input" v-model="currentTitle" v-on:keyup="saveTitle">
+        <input type="text" class="input" v-model="currentTitle" v-on:keyup="saveTaskTitle">
       </section>
       <section class="modal-card-body has-background-grey-darker">
         <div class="columns">
@@ -49,11 +51,11 @@
                 </button>
               </div>
             </editor-menu-bar>
-            <editor-content :editor="descriptionEditor" />
+            <editor-content :editor="descriptionEditor" class="textarea" />
           </div>
           <div class="column is-4">
             <div class="select">
-              <select v-model="currentListId" v-on:change="updateList">
+              <select v-model="currentListId" v-on:change="updateTaskListId">
                 <option :value="list.id" v-for="list in lists" :checked="currentListId == list.id">
                   {{ list.title }}
                 </option>
@@ -141,7 +143,7 @@ import toastr from 'toastr/toastr';
       closeModal: function() { 
         Turbolinks.visit(`/projects/${this.$route.params.title}`);
       },
-      updateList: function() { 
+      updateTaskListId: function() { 
         this.$http.put(
           `/api/v1/projects/${this.currentTitle}/lists/${this.currentListId}/tasks/${this.currentTaskId}`, { 
             tasks: {
@@ -155,7 +157,7 @@ import toastr from 'toastr/toastr';
             }
           });
       },
-      saveTitle: function() { 
+      saveTaskTitle: function() { 
         const vm = this;
         setTimeout(function(){
           vm.$http.put(
@@ -164,7 +166,26 @@ import toastr from 'toastr/toastr';
                 title: vm.currentTitle
               }
             }, {
-              headers: { token: this.token },
+              headers: { token: vm.token },
+            }).then(response => {
+              if(response.status == 202) {
+                toastr.success('Saved!');
+              }
+            }, response => { toastr.error('May accour a problem') });
+          }, 1000)
+      },
+      saveListTitle: function() {
+        const vm = this;
+        let listId = event.target.dataset.listId;
+        let currentTitle = event.target.value;
+        setTimeout(function(){
+          vm.$http.put(
+            `/api/v1/projects/${vm.$route.params.title}/lists/${listId}`, { 
+              lists: {
+                title: currentTitle
+              }
+            }, {
+              headers: { token: vm.token },
             }).then(response => {
               if(response.status == 202) {
                 toastr.success('Saved!');
