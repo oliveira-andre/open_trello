@@ -18,5 +18,9 @@
     color: white !important;
     text-decoration: none;
     border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
