@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: :create
       resources :projects, only: :index, param: :title do
-        resources :lists, only: %i[index create] do
+        resources :lists, only: %i[index create update] do
           resources :tasks, only: %i[create update]
         end
       end
